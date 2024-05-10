@@ -23,15 +23,30 @@ def credenciales():
 
 credencial = credenciales()
 
-async def servicio_gmail(credencial):
+def obtener_ultimo_correo():
     service = build('gmail', 'v1', credentials=credencial)
-    results = service.users().messages().list(userId='me', labelIds=['INBOX'], maxResults=1).execute()
+    # Muestra la lista de mensajes/correos que han llegado
+    results = service.users().messages().list(userId='me', labelIds=['INBOX']).execute()
     messages = results.get('messages', [])
-    return messages
+    if messages:
+        message_id = messages[0]['id']
+        # Recupera el ultimo mensaje/correo que ha llegado
+        message = service.users().messages().get(userId='me', id=message_id).execute()
+        headers = message['payload']['headers']
+        subject = next((header['value'] for header in headers if header['name'] == 'Subject'), None)
+        sender = next((header['value'] for header in headers if header['name'] == 'From'), None)
+        body = message['snippet']
+        return {"Asunto": subject, "Remitente": sender, "Cuerpo": body}
+    else:
+        return {"message": "No se encontraron correos en la bandeja de entrada"}
+
 
 @api.post("/")
-async def notificacionesUser(request : Request):
-    data = await request.json()
-    print("Tienes un correo entrante...\n", data)
+async def notificacionesUser(request: Request):
+    print (request)
+    detalles_correo = obtener_ultimo_correo()
+    print("Tienes un correo entrante...", detalles_correo)
     return {}
+
+
 
