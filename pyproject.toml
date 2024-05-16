@@ -1,0 +1,45 @@
+[tool.pylint.messages]
+max-line-length = 120
+disable         = ["R0903", "E0213", "E0401", "E0402", "E0611"]
+
+
+[tool.curlylint.rules]
+  image_alt = true
+
+[tool.mypy]
+  files                       = "*/.py"
+  check_untyped_defs          = true
+  disallow_untyped_defs       = true
+  disallow_incomplete_defs    = true
+  disallow_untyped_decorators = true
+  warn_return_any             = true
+  warn_unused_ignores         = true
+  no_implicit_optional        = true
+  show_error_codes            = true
+
+[tool.ruff]
+  line-length    = 120
+  target-version = "py310"
+  fix            = true
+  unfixable      = ["F401", "F841"]
+  ignore         = ["E711", "E712", "N805", "D401"]
+  exclude        = ["migrations"]
+  select = [
+    "F", # Pyflakes
+    "E", # Pycodestyle
+    "W", # Pycodestyle
+    "I", # isort
+    "B", # flake8-bugbear
+    "Q", # flake8-quotes
+    "D", # pydocstyle
+    "N", # pep8-naming
+    "UP", # pyupgrade
+    "PL", # Pylint
+  ]
+
+[tool.ruff.pydocstyle]
+  convention = "google"
+
+[tool.ruff.mccabe]
+  # Flag errors (C901) whenever the complexity level exceeds 5.
+  max-complexity = 5

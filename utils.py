@@ -2,19 +2,21 @@
 
 import base64
 import re
-from googleapiclient.discovery import build
+
 from google.oauth2 import service_account
+from googleapiclient.discovery import build
 
 
 def obtener_credenciales():
-    SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
-    SERVICE_ACCOUNT_FILE = (
-        "credentials.json"  # Ruta al archivo JSON de la cuenta de servicio
-    )
+    """Obtener las credenciales de gmail.
 
-    return service_account.Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE, scopes=SCOPES
-    )
+    Returns:
+        _type_: _description_
+    """
+    SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
+    SERVICE_ACCOUNT_FILE = "credentials.json"  # Ruta al archivo JSON de la cuenta de servicio
+
+    return service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
 
 def obtener_ultimo_correo():
@@ -28,13 +30,9 @@ def obtener_ultimo_correo():
         message = service.users().messages().get(userId="me", id=message_id).execute()
         headers = message["payload"]["headers"]
 
-        subject = next(
-            header["value"] for header in headers if header["name"] == "Subject"
-        )
+        subject = next(header["value"] for header in headers if header["name"] == "Subject")
         sender = next(header["value"] for header in headers if header["name"] == "From")
-        body = obtener_cuerpo(
-            message
-        )  # Asumiendo que tienes una función para extraer el cuerpo del correo
+        body = obtener_cuerpo(message)  # Asumiendo que tienes una función para extraer el cuerpo del correo
 
         print({"Asunto": subject, "Remitente": sender, "Cuerpo": body})
         return {"Asunto": subject, "Remitente": sender, "Cuerpo": body}
