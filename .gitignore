@@ -3,3 +3,5 @@ __pycache__
 *.json
 .env
 .venv
+.ruff_cache
+.editorconfig
