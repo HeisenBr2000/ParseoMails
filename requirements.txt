@@ -9,6 +9,7 @@ annotated-types==0.6.0
 anyio==4.3.0
     # via
     #   httpx
+    #   openai
     #   starlette
     #   watchfiles
 cachetools==5.3.3
@@ -27,7 +28,11 @@ click==8.1.7
 colorama==0.4.6
     # via
     #   click
+    #   pytest
+    #   tqdm
     #   uvicorn
+distro==1.9.0
+    # via openai
 dnspython==2.6.1
     # via email-validator
 email-validator==2.1.1
@@ -70,13 +75,17 @@ httplib2==0.22.0
 httptools==0.6.1
     # via uvicorn
 httpx==0.27.0
-    # via fastapi
+    # via
+    #   fastapi
+    #   openai
 idna==3.7
     # via
     #   anyio
     #   email-validator
     #   httpx
     #   requests
+iniconfig==2.0.0
+    # via pytest
 jinja2==3.1.4
     # via fastapi
 markdown-it-py==3.0.0
@@ -85,10 +94,20 @@ markupsafe==2.1.5
     # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
+mypy==1.10.0
+    # via -r requirements.in
+mypy-extensions==1.0.0
+    # via mypy
 oauthlib==3.2.2
     # via requests-oauthlib
+openai==1.30.1
+    # via -r requirements.in
 orjson==3.10.3
     # via fastapi
+packaging==24.0
+    # via pytest
+pluggy==1.5.0
+    # via pytest
 proto-plus==1.23.0
     # via google-api-core
 protobuf==4.25.3
@@ -103,13 +122,17 @@ pyasn1==0.6.0
 pyasn1-modules==0.4.0
     # via google-auth
 pydantic==2.7.0
-    # via fastapi
+    # via
+    #   fastapi
+    #   openai
 pydantic-core==2.18.1
     # via pydantic
 pygments==2.18.0
     # via rich
 pyparsing==3.1.2
     # via httplib2
+pytest==8.2.1
+    # via -r requirements.in
 python-dotenv==1.0.1
     # via uvicorn
 python-multipart==0.0.9
@@ -134,13 +157,18 @@ sniffio==1.3.1
     # via
     #   anyio
     #   httpx
+    #   openai
 starlette==0.37.2
     # via fastapi
+tqdm==4.66.4
+    # via openai
 typer==0.12.3
     # via fastapi-cli
 typing-extensions==4.11.0
     # via
     #   fastapi
+    #   mypy
+    #   openai
     #   pydantic
     #   pydantic-core
     #   typer

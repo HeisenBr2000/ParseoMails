@@ -9,21 +9,17 @@ app = FastAPI()
 
 
 @app.post("/")
-async def notificaciones_user(request: Request):
+async def notificaciones_user(request: Request) -> str:
     """Función que escucha al correo de gmail cada vez que llega un correo."""
-    print(await request.json())
     email = "matias@boostapp.cl"
-    correo_info = extraer_info_correo(email)
-    print(correo_info)
-
-    if correo_info:
+    if correo_info := extraer_info_correo(email):
         email_body = correo_info[0]["cuerpo"]
         subject_email = correo_info[0]["asunto"]
         prompt = leer_prompt("prompt.json")
-        output = {}
 
-        resultado = analizar_correo(email_body, subject_email, prompt, output)
-        print(resultado)
-        return resultado
-    else:
-        return {"error": "No se pudo extraer informacion del correo"}
+        try:
+            analizar_correo(email_body, subject_email, prompt)
+        except Exception:
+            print("No se pudo extraer informacion del correo")
+
+    return ""
