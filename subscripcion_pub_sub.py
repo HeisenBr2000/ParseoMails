@@ -10,7 +10,7 @@ def llamada_correos():
     """Función que llama al tema pub/sub para publicar notificaciones."""
     service = obtener_servicio_gmail("matias@boostapp.cl")
     request_body = {"labelIds": ["INBOX"], "topicName": TOPIC_NAME}
-    response = service.users().watch(userId="matias@boostapp.cl", body=request_body).execute()
+    response = service.users().watch(userId="matias@boostapp.cl", max_results=1, body=request_body).execute()
     print("Watch response: ", response)
 
 

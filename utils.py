@@ -1,6 +1,7 @@
 """Funciones de utilidad."""
 
 import base64
+import json
 
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
@@ -54,7 +55,14 @@ def extraer_info_correo(email: str):
         subject = obtener_asunto(headers)
         body = obtener_cuerpo(message)
 
-        correo_info = {"Remitente": sender, "Asunto": subject, "Cuerpo": body}
+        correo_info = {"remitente": sender, "asunto": subject, "cuerpo": body}
 
         correos_info.append(correo_info)
         return correos_info
+
+
+def leer_prompt(archivo):
+    """Función que lee archivo que contiene el prompt."""
+    with open(archivo, encoding="utf-8") as prompt:
+        data = json.load(prompt)
+        return data["prompt"]
