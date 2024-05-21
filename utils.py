@@ -16,7 +16,7 @@ def obtener_remitente(headers: dict) -> str:
     remitente = next(header["value"] for header in headers if header["name"] == "From")
     if match := re.search(r"<(.+?)>", remitente):
         return match[1]
-    raise ValueError("No se pudo detectar el remitente")
+    raise ValueError(f"No se pudo detectar el remitente. {headers}")
 
 
 def obtener_cuerpo(message: dict) -> str:

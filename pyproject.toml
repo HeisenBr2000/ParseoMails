@@ -43,3 +43,6 @@ disable         = ["R0903", "E0213", "E0401", "E0402", "E0611"]
 [tool.ruff.mccabe]
   # Flag errors (C901) whenever the complexity level exceeds 5.
   max-complexity = 5
+
+[tool.ruff.lint.per-file-ignores]
+"prompt/prompts.py" = ["E501"]

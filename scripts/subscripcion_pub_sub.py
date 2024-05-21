@@ -1,16 +1,26 @@
-from utils import obtener_servicio_gmail
+"""Script para renovar la subscripción de pub sub."""
 
-# Rutas y configuración
+import os
+
+from dotenv import load_dotenv
+
+from gmail.gmail import obtener_servicio_gmail
+
+load_dotenv()
+
 SERVICE_ACCOUNT_FILE = "boost-1minaldia-c63063e85064.json"
 TOPIC_NAME = "projects/boost-1minaldia/topics/mailParser"
 
 
-# Alcances necesarios
-def llamada_correos():
+def llamada_correos() -> None:
     """Función que llama al tema pub/sub para publicar notificaciones."""
-    service = obtener_servicio_gmail("matias@boostapp.cl")
+    email = os.getenv("EMAIL")
+    if email is None:
+        raise ValueError("Email no detectado")
+
+    service = obtener_servicio_gmail(email)
     request_body = {"labelIds": ["INBOX"], "topicName": TOPIC_NAME}
-    response = service.users().watch(userId="matias@boostapp.cl", max_results=1, body=request_body).execute()
+    response = service.users().watch(userId=email, max_results=1, body=request_body).execute()
     print("Watch response: ", response)
 
 
